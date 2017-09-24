@@ -51,7 +51,7 @@ public class MonkayCommands : MonoBehaviour {
     void EnableCharacter(GameObject character, bool enable)
     {
         character.GetComponent<CameraReferencesHolder>().character.enabled = enable;
-        if (character == monkay)
+        if (character == monkay.gameObject)
             Wait(character, true);
         //character.GetComponent<CameraReferencesHolder>().character.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().enabled = enabled;
         character.GetComponent<CameraReferencesHolder>().cameraLookAt.SetActive(enable);
@@ -60,6 +60,7 @@ public class MonkayCommands : MonoBehaviour {
     void Wait(GameObject character, bool enable)
     {
         character.GetComponent<CameraReferencesHolder>().character.EnableAI(!enable);
+        waiting = enable;
     }
 
     void LookAt(GameObject character)
@@ -112,13 +113,11 @@ public class MonkayCommands : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Alpha1)) //WAIT
             {
                 Wait(monkay.gameObject, true);
-                waiting = true;
                 text.text = "WAIT";
             }
             if (Input.GetKeyDown(KeyCode.Alpha2)) //TO ME
             {
                 Wait(monkay.gameObject, false);
-                waiting = false;
                 text.text = "COME HERE";
             }
         }

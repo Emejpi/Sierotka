@@ -12,14 +12,23 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+        private bool crouch;
 
+        public float walkSoundStrenght;
+        public float coucheSoundStrenght;
+        public float runSoundStrenght;
+
+        public float GetSoundStrenght()
+        {
+            return m_Move.magnitude * walkSoundStrenght;
+        }
         
         public void EnableAI(bool enable)
         {
             if(GetComponent<AICharacterControl>())
             {
-                GetComponent<UnityEngine.AI.NavMeshAgent>().ActivateCurrentOffMeshLink(enable);
                 GetComponent<AICharacterControl>().enabled = enable;
+                GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = enable;
             }
         }
 
@@ -54,10 +63,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         // Fixed update is called in sync with physics
         private void FixedUpdate()
         {
+
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.C);
+            crouch = Input.GetKey(KeyCode.C);
 
             // calculate move direction to pass to character
             if (m_Cam != null)

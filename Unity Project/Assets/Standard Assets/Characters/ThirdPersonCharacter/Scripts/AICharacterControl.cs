@@ -11,6 +11,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public ThirdPersonCharacter character { get; private set; } // the character we are controlling
         public Transform target;                                    // target to aim for
 
+        public float moveSpeed;
+        public bool monkay;
+
         private void Start()
         {
             // get the components on the object we need ( should not be null due to require component so no need to check )
@@ -21,26 +24,33 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	        agent.updatePosition = true;
         }
 
-
-        private void Update()
+        void Update()
         {
-            if (target != null)
-                agent.SetDestination(target.position);
-
-            if (agent.remainingDistance > agent.stoppingDistance)
+            //if (enabled)
             {
-                character.Move(agent.desiredVelocity, false, false);
+                if (target != null)
+                    agent.SetDestination(target.position);
 
-                if (agent.remainingDistance > agent.stoppingDistance + 3)
-                    agent.autoBraking = false;
+                if (agent.remainingDistance > agent.stoppingDistance)
+                {
+                    character.Move(agent.desiredVelocity * moveSpeed, false, false);
+
+                    if (monkay)
+                    {
+                        if (agent.remainingDistance > agent.stoppingDistance + 3)
+                            agent.autoBraking = false;
+                        else
+                            agent.autoBraking = true;
+                    }
+                }
                 else
-                    agent.autoBraking = true;
-            }
-            else
-            {
-                character.Move(Vector3.zero, false, false);
-                agent.autoBraking = true;
-                //GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                {
+                    character.Move(Vector3.zero, false, false);
+
+                    if (monkay)
+                        agent.autoBraking = true;
+                    //GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                }
             }
         }
 
