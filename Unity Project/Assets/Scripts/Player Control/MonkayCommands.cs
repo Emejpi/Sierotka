@@ -18,7 +18,20 @@ public class MonkayCommands : MonoBehaviour {
     public float switchCharactersLookAtAcceleration;
     bool switchingChars;
 
-    bool waiting;
+    UnityStandardAssets.Characters.ThirdPerson.AICharacterControl monkayAI;
+
+    public GameObject monkayTarget;
+
+    public enum MonkayState
+    {
+        waiting,
+        following,
+        going,
+        running
+    }
+    MonkayState state;
+
+    public DirectionTarget directionTarget;
 
     void SwitchCharacters()
     {
@@ -52,15 +65,32 @@ public class MonkayCommands : MonoBehaviour {
     {
         character.GetComponent<CameraReferencesHolder>().character.enabled = enable;
         if (character == monkay.gameObject)
-            Wait(character, true);
+            ChangeState(character, MonkayState.waiting);
         //character.GetComponent<CameraReferencesHolder>().character.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().enabled = enabled;
         character.GetComponent<CameraReferencesHolder>().cameraLookAt.SetActive(enable);
     }
 
-    void Wait(GameObject character, bool enable)
+    public void ChangeState(GameObject character, MonkayState state)
     {
-        character.GetComponent<CameraReferencesHolder>().character.EnableAI(!enable);
-        waiting = enable;
+
+        character.GetComponent<CameraReferencesHolder>()
+            .character.EnableAI(state == MonkayState.waiting? false : true);
+
+        this.state = state;
+
+        if (state != MonkayState.running)
+            character.GetComponent<CameraReferencesHolder>().character.Chase(false);
+
+        switch(state)
+        {
+            case MonkayState.following:
+                monkayAI.target = monkayTarget.transform;
+                break;
+
+            case MonkayState.going:
+                monkayAI.target = directionTarget.transform;
+                break;
+        }
     }
 
     void LookAt(GameObject character)
@@ -73,13 +103,22 @@ public class MonkayCommands : MonoBehaviour {
         GetComponent<FollowMe>().Follow(character.GetComponent<CameraReferencesHolder>().cameraPose);
     }
 
+    void PlotkaPort()
+    {
+
+    }
+
     // Use this for initialization
     void Start () {
+        monkayAI = monkay.character.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>();
+
         switchingChars = false;
         currentChar = orphan;
 
         SwitchCharacters();
         SwitchCharacters();
+
+        ChangeState(monkay.gameObject, MonkayState.following);
     }
 	
 	// Update is called once per frame
@@ -101,7 +140,7 @@ public class MonkayCommands : MonoBehaviour {
 
         if (currentChar == orphan)
         {
-            if(waiting)
+            if(state == MonkayState.waiting)
                 monkay.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
         }
         else
@@ -110,18 +149,25 @@ public class MonkayCommands : MonoBehaviour {
         }
         if (currentChar == orphan)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) //WAIT
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !monkay.character.IsBeingChased()) //WAIT
             {
-                Wait(monkay.gameObject, true);
+                ChangeState(monkay.gameObject, MonkayState.waiting);
                 text.text = "WAIT";
             }
             if (Input.GetKeyDown(KeyCode.Alpha2)) //TO ME
             {
-                Wait(monkay.gameObject, false);
+                ChangeState(monkay.gameObject, MonkayState.following);
                 text.text = "COME HERE";
             }
+            if (Input.GetKeyDown(KeyCode.E)) //TO ME
+            {
+                directionTarget.Go(transform);
+                ChangeState(monkay.gameObject, MonkayState.going);
+                text.text = "GO!";
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) //
+        if ((Input.GetKeyDown(KeyCode.Alpha3) && !orphan.character.IsBeingChased())
+                || (orphan.character.IsBeingChased() && currentChar != orphan)) // Switch
         {
             text.text = "";
             SwitchCharacters();

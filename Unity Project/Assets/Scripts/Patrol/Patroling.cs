@@ -6,7 +6,7 @@ public class Patroling : MonoBehaviour
 {
 
     public List<Transform> points;
-    UnityStandardAssets.Characters.ThirdPerson.AICharacterControl ai;
+    public UnityStandardAssets.Characters.ThirdPerson.AICharacterControl ai;
 
     public GameObject test;
     public GameObject eyesRef;
@@ -26,6 +26,17 @@ public class Patroling : MonoBehaviour
 
     GameObject susObj;
 
+    void ChangeTarget(Transform target)
+    {
+        if (target.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>())
+            target.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().Chase(false);
+
+        ai.target = target;
+
+        if (target.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>())
+            target.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().Chase(true);
+    }
+
     void ChangeState(State state)
     {
         if (susObj)
@@ -43,7 +54,7 @@ public class Patroling : MonoBehaviour
     public void Chase(GameObject target)
     {
         ChangeState(State.chasing);
-        ai.target = target.transform;
+        ChangeTarget(target.transform);
         ai.moveSpeed = 1;
         timer = Time.time + chasingDur;
     }
@@ -52,16 +63,16 @@ public class Patroling : MonoBehaviour
     void Start()
     {
         ai = GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>();
-        ai.target = points[0];
+        ChangeTarget(points[0]);
         ai.moveSpeed = 0.5f;
         state = State.patroling;
     }
 
-    void Suspicious()
+    public void Suspicious()
     {
         ChangeState(State.suspicious);
         susObj = Instantiate(suspiciousObject, ai.target.transform.position, Quaternion.identity);
-        ai.target = susObj.transform.GetChild(0);
+        ChangeTarget(susObj.transform.GetChild(0));
         timer = Time.time + suspiciousDur;
         ai.moveSpeed = 0.5f;
 
@@ -71,7 +82,7 @@ public class Patroling : MonoBehaviour
     {
         points.Add(points[0]);
         points.RemoveAt(0);
-        ai.target = points[0];
+        ChangeTarget(points[0]);
         ai.moveSpeed = 0.5f;
         ChangeState(State.patroling);
     }
@@ -123,17 +134,22 @@ public class Patroling : MonoBehaviour
                     if (ray.collider == body)
                     {
                         Chase(body.gameObject);
+                        //body.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().Chase(true);
                         print("seeee you");
                     }
                 }
                 break;
 
-            case "sound":
-                if(state == State.suspicious)
-                {
-                    ai.target.transform.position = body.transform.position;
-                }
-                break;
+            //case "sound":
+            //    if(state == State.patroling)
+            //    {
+            //        Suspicious();
+            //    }
+            //    if(state == State.suspicious)
+            //    {
+            //        ai.target.transform.position = body.transform.position;
+            //    }
+            //    break;
 
         }
     }

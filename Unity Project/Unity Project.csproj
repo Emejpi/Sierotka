@@ -91,8 +91,11 @@
     <Compile Include="Assets\Scripts\Camera\SetPositionFromCameraSettings.cs" />
     <Compile Include="Assets\Scripts\Camera\SimpleMouseRotatorSetFromCameraSettings.cs" />
     <Compile Include="Assets\Scripts\Patrol\Patroling.cs" />
+    <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
     <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
+    <Compile Include="Assets\Scripts\Player Control\DirectionTarget.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayCommands.cs" />
+    <Compile Include="Assets\Scripts\Player Control\MonkayGoCrazy.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayTargetChanger.cs" />
     <Compile Include="Assets\Scripts\Player Control\SoundMaker.cs" />
     <Compile Include="Assets\Scripts\Player Control\WalkSounderWithUser.cs" />

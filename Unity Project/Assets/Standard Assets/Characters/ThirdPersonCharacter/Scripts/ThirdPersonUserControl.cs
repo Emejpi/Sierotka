@@ -14,13 +14,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
         private bool crouch;
 
-        public float walkSoundStrenght;
-        public float coucheSoundStrenght;
-        public float runSoundStrenght;
+        public bool beingChased;
+
+        public void Chase(bool chased)
+        {
+            beingChased = chased;
+        }
+
+        public bool IsBeingChased()
+        {
+            return beingChased;
+        }
 
         public float GetSoundStrenght()
         {
-            return m_Move.magnitude * walkSoundStrenght;
+            return m_Character.GetSoundStrenght();
         }
         
         public void EnableAI(bool enable)
