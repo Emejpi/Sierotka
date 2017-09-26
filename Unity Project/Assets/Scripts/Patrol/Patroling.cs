@@ -114,42 +114,42 @@ public class Patroling : MonoBehaviour
 
     }
 
+    void DoISeeIt(Collider body)
+    {
+        RaycastHit ray;
+        Vector3 myPose = new Vector3(eyesRef.transform.position.x, body.transform.position.y + 1, eyesRef.transform.position.z);
+        if (Physics.Raycast(myPose, (body.transform.position + new Vector3(0, 1, 0) - myPose), out ray))
+        {
+            if (ray.collider == body)
+            {
+                Chase(body.gameObject);
+            }
+        }
+    }
+
     void OnTriggerStay(Collider body)
     {
         switch (body.tag)
         {
             case "Player":
-                //print("i almost see you");
-
-                //Instantiate(test, new Vector3(eyesRef.transform.position.x, body.transform.position.y + 1, eyesRef.transform.position.z), Quaternion.identity);
-                //Instantiate(test, body.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-
-                RaycastHit ray;
-                Vector3 myPose = new Vector3(eyesRef.transform.position.x, body.transform.position.y + 1, eyesRef.transform.position.z);
-                if (Physics.Raycast(myPose, (body.transform.position + new Vector3(0, 1, 0) - myPose), out ray))
-                {
-
-                    //print(ray.collider.name);
-
-                    if (ray.collider == body)
-                    {
-                        Chase(body.gameObject);
-                        //body.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>().Chase(true);
-                        print("seeee you");
-                    }
-                }
+                DoISeeIt(body);
                 break;
 
-            //case "sound":
-            //    if(state == State.patroling)
-            //    {
-            //        Suspicious();
-            //    }
-            //    if(state == State.suspicious)
-            //    {
-            //        ai.target.transform.position = body.transform.position;
-            //    }
-            //    break;
+            case "monkay":
+                if(ai.target.tag != "Player")
+                    DoISeeIt(body);
+                break;
+
+                //case "sound":
+                //    if(state == State.patroling)
+                //    {
+                //        Suspicious();
+                //    }
+                //    if(state == State.suspicious)
+                //    {
+                //        ai.target.transform.position = body.transform.position;
+                //    }
+                //    break;
 
         }
     }

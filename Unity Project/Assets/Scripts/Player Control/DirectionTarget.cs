@@ -24,7 +24,7 @@ public class DirectionTarget : MonoBehaviour {
 
     public void Go(Transform parent)
     {
-        transform.position = parent.position;
+        transform.position = parent.position + parent.forward * 5;
         transform.eulerAngles = parent.rotation.eulerAngles;
         transform.parent = null;
         going = true;

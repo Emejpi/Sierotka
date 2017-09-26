@@ -6,4 +6,11 @@ public class CameraReferencesHolder : MonoBehaviour {
     public GameObject cameraPose;
     public GameObject cameraLookAt;
     public UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl character;
+
+    public SkinnedMeshRenderer rend;
+
+    public bool Visible()
+    {
+        return rend.isVisible;
+    }
 }
