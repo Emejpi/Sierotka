@@ -114,7 +114,7 @@ public class Patroling : MonoBehaviour
 
     }
 
-    void DoISeeIt(Collider body)
+    public void DoISeeIt(Collider body)
     {
         RaycastHit ray;
         Vector3 myPose = new Vector3(eyesRef.transform.position.x, body.transform.position.y + 1, eyesRef.transform.position.z);
@@ -136,7 +136,7 @@ public class Patroling : MonoBehaviour
                 break;
 
             case "monkay":
-                if(ai.target.tag != "Player")
+                if (ai.target.tag != "Player")
                     DoISeeIt(body);
                 break;
 
