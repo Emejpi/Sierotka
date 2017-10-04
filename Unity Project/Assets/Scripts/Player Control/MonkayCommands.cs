@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MonkayCommands : MonoBehaviour {
 
+    PlayerControlSettings settings;
+
     public CameraReferencesHolder orphan;
     public CameraReferencesHolder monkay;
 
@@ -19,6 +21,8 @@ public class MonkayCommands : MonoBehaviour {
     public float switchCharactersCameraSpeed;
     public float switchCharactersCameraSpeedAcceleration;
     public float switchCharactersLookAtAcceleration;
+    float currSChCSA;
+    float currSChLAtA;
     bool switchingChars;
 
     public float maxDistanceFromPlayerOnBackCommand;
@@ -40,9 +44,16 @@ public class MonkayCommands : MonoBehaviour {
 
     public DirectionTarget directionTarget;
 
+    public float distanceFromTargetTriggeringBaseSpeed;
+
     public float GetDistanceFormDirectionTarget()
     {
         return Vector3.Distance(directionTarget.transform.position, monkay.character.transform.position);
+    }
+
+    public bool IsOrphanActive()
+    {
+        return orphan == currentChar;
     }
 
     void SwitchCharacters()
@@ -128,6 +139,11 @@ public class MonkayCommands : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        settings = GetComponent<PlayerControlSettings>();
+
+        currSChCSA = switchCharactersCameraSpeedAcceleration;
+        currSChLAtA = switchCharactersLookAtAcceleration;
+
         monkayAI = monkay.character.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>();
 
         switchingChars = false;
@@ -157,10 +173,19 @@ public class MonkayCommands : MonoBehaviour {
         {
             //if (timer < Time.time)
             {
-                GetComponent<FollowMe>().speed += Time.deltaTime * switchCharactersCameraSpeedAcceleration;
-                GetComponent<LookAtMe>().speedMod -= Time.deltaTime * switchCharactersLookAtAcceleration; ;
+                GetComponent<FollowMe>().speed += Time.deltaTime * currSChCSA;
+                GetComponent<LookAtMe>().speedMod -= Time.deltaTime * currSChLAtA;
+                if (GetComponent<FollowMe>().DistanceFormTarget() < distanceFromTargetTriggeringBaseSpeed 
+                    && currentChar.character.GetSoundStrenght() > 0.2f)
+                {
+                    currSChCSA *= 2f;
+                    currSChLAtA *= 2f;
+                }
                 if (GetComponent<FollowMe>().StartSpeedIfOverStart())
                 {
+                    currSChCSA = switchCharactersCameraSpeedAcceleration;
+                    currSChLAtA = switchCharactersLookAtAcceleration;
+
                     GetComponent<LookAtMe>().speedMod = 0;
                     switchingChars = false;
                 }
@@ -177,16 +202,18 @@ public class MonkayCommands : MonoBehaviour {
         {
             orphan.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
         }
+
+
         if (currentChar == orphan)
         {
             if (state != MonkayState.onBack)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1) && !monkay.character.IsBeingChased()) //WAIT
+                if (Input.GetKeyDown(settings.wait) && !monkay.character.IsBeingChased()) //WAIT
                 {
                     ChangeState(monkay.gameObject, MonkayState.waiting);
                     text.text = "WAIT";
                 }
-                if (Input.GetKeyDown(KeyCode.Alpha2)) //TO ME
+                if (Input.GetKeyDown(settings.followMe)) //TO ME
                 {
                     if (!monkay.Visible())
                     {
@@ -195,14 +222,14 @@ public class MonkayCommands : MonoBehaviour {
                     ChangeState(monkay.gameObject, MonkayState.following);
                     text.text = "COME HERE";
                 }
-                if (Input.GetKeyDown(KeyCode.E)) //GO
+                if (Input.GetKeyDown(settings.go)) //GO
                 {
                     directionTarget.Go(transform);
                     ChangeState(monkay.gameObject, MonkayState.going);
                     text.text = "GO!";
                 }
             }
-            if(Input.GetKeyDown(KeyCode.Q) 
+            if(Input.GetKeyDown(settings.onMyBack) 
                 && (state == MonkayState.following || state == MonkayState.waiting)
                 && !monkay.character.IsBeingChased() 
                 && !orphan.character.IsBeingChased() 
@@ -224,7 +251,7 @@ public class MonkayCommands : MonoBehaviour {
                 }
             }
 
-            if(jumpOnBackCutSceneCamera.active && timer < Time.time)
+            if (jumpOnBackCutSceneCamera.active && timer < Time.time)
             {
                 jumpOnBackCutSceneCamera.SetActive(false);
                 if(state != MonkayState.onBack)
@@ -232,7 +259,7 @@ public class MonkayCommands : MonoBehaviour {
             }
 
         }
-        if ((Input.GetKeyDown(KeyCode.Alpha3) && !orphan.character.IsBeingChased())
+        if ((Input.GetKeyDown(settings.changeCharactrs) && !orphan.character.IsBeingChased())
                 || (orphan.character.IsBeingChased() && currentChar != orphan)) // Switch
         {
             text.text = "";

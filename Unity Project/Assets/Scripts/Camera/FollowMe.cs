@@ -14,6 +14,11 @@ public class FollowMe : MonoBehaviour {
         startSpeed = speed;
     }
 
+    public float DistanceFormTarget()
+    {
+        return Vector3.Distance(transform.position, target.transform.position);
+    }
+
     public bool StartSpeedIfOverStart()
     {
         if (startSpeed < speed)

@@ -84,7 +84,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ConeCollider\Samples\Sample_1\CameraRotate.cs" />
+    <Compile Include="Assets\ConeCollider\Samples\Sample_1\InCheck.cs" />
+    <Compile Include="Assets\ConeCollider\Samples\Sample_2\SwingObject.cs" />
+    <Compile Include="Assets\ConeCollider\Samples\Sample_3\EnemyFind.cs" />
+    <Compile Include="Assets\ConeCollider\Samples\Sample_3\PlayerMove.cs" />
+    <Compile Include="Assets\ConeCollider\Script\ColliderTest.cs" />
+    <Compile Include="Assets\ConeCollider\Script\ConeCollider.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraPortal.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSettings.cs" />
     <Compile Include="Assets\Scripts\Camera\CollisionZoomer.cs" />
     <Compile Include="Assets\Scripts\Camera\CustomParenting.cs" />
@@ -93,19 +101,31 @@
     <Compile Include="Assets\Scripts\Camera\LookAtMe.cs" />
     <Compile Include="Assets\Scripts\Camera\SetPositionFromCameraSettings.cs" />
     <Compile Include="Assets\Scripts\Camera\SimpleMouseRotatorSetFromCameraSettings.cs" />
+    <Compile Include="Assets\Scripts\CharakterPortal.cs" />
+    <Compile Include="Assets\Scripts\Patrol\BeingSeen.cs" />
+    <Compile Include="Assets\Scripts\Patrol\PatrolHoler.cs" />
     <Compile Include="Assets\Scripts\Patrol\Patroling.cs" />
+    <Compile Include="Assets\Scripts\Patrol\PatrolPortal.cs" />
     <Compile Include="Assets\Scripts\Patrol\Seeing.cs" />
     <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
     <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
     <Compile Include="Assets\Scripts\Player Control\DirectionTarget.cs" />
+    <Compile Include="Assets\Scripts\Player Control\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Player Control\Interactions.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayCommands.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayGoCrazy.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayTargetChanger.cs" />
+    <Compile Include="Assets\Scripts\Player Control\PlayerControlSettings.cs" />
+    <Compile Include="Assets\Scripts\Player Control\PlayerSkills.cs" />
     <Compile Include="Assets\Scripts\Player Control\SoundMaker.cs" />
     <Compile Include="Assets\Scripts\Player Control\WalkSounderWithUser.cs" />
     <Compile Include="Assets\Scripts\Selfdestruct.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ConeCollider\readme_en.txt" />
+    <None Include="Assets\ConeCollider\readme_jp.txt" />
+    <None Include="Assets\Shaders\InteractableOutline.shader" />
+    <None Include="Assets\Shaders\standard.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />

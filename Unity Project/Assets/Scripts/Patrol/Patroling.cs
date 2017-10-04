@@ -131,14 +131,14 @@ public class Patroling : MonoBehaviour
     {
         switch (body.tag)
         {
-            case "Player":
-                DoISeeIt(body);
-                break;
+            //case "Player":
+            //    DoISeeIt(body);
+            //    break;
 
-            case "monkay":
-                if (ai.target.tag != "Player")
-                    DoISeeIt(body);
-                break;
+            //case "monkay":
+            //    if (ai.target.tag != "Player")
+            //        DoISeeIt(body);
+            //    break;
 
                 //case "sound":
                 //    if(state == State.patroling)
