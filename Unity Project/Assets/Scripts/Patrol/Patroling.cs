@@ -140,16 +140,16 @@ public class Patroling : MonoBehaviour
             //        DoISeeIt(body);
             //    break;
 
-                //case "sound":
-                //    if(state == State.patroling)
-                //    {
-                //        Suspicious();
-                //    }
-                //    if(state == State.suspicious)
-                //    {
-                //        ai.target.transform.position = body.transform.position;
-                //    }
-                //    break;
+            case "sound":
+                if (state == State.patroling)
+                {
+                    Suspicious();
+                }
+                if (state == State.suspicious)
+                {
+                    ai.target.transform.position = body.transform.position;
+                }
+                break;
 
         }
     }

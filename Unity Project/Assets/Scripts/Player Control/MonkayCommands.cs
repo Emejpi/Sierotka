@@ -31,6 +31,8 @@ public class MonkayCommands : MonoBehaviour {
 
     public GameObject monkayTarget;
 
+    List<CircleOption> options;
+
     public enum MonkayState
     {
         waiting,
@@ -56,7 +58,7 @@ public class MonkayCommands : MonoBehaviour {
         return orphan == currentChar;
     }
 
-    void SwitchCharacters()
+    public void SwitchCharacters()
     {
         if (currentChar.GetComponent<CameraSettings>().slowCharacterSwitch)
         {
@@ -132,13 +134,10 @@ public class MonkayCommands : MonoBehaviour {
         GetComponent<FollowMe>().Follow(character.GetComponent<CameraReferencesHolder>().cameraPose);
     }
 
-    void PlotkaPort()
-    {
-
-    }
-
     // Use this for initialization
     void Start () {
+        options = GetComponent<CircleSelect>().options;
+
         settings = GetComponent<PlayerControlSettings>();
 
         currSChCSA = switchCharactersCameraSpeedAcceleration;
@@ -164,6 +163,59 @@ public class MonkayCommands : MonoBehaviour {
             monkay.character.GetComponent<WalkSounderWithUser>().enabled = visible;
             monkay.character.GetComponent<MonkayGoCrazy>().enabled = visible;
         }
+    }
+
+    void DisActivateAllOptions()
+    {
+        foreach(CircleOption option in options)
+        {
+            option.active = false;
+        }
+    }
+
+    public void Wait()
+    {
+        ChangeState(monkay.gameObject, MonkayState.waiting);
+        text.text = "WAIT";
+    }
+
+    public void FollowMe()
+    {
+        if (!monkay.Visible())
+        {
+            monkay.character.transform.position = transform.position - transform.forward * 5;
+        }
+        ChangeState(monkay.gameObject, MonkayState.following);
+        text.text = "COME HERE";
+    }
+
+    public void GO()
+    {
+        directionTarget.Go(transform);
+        ChangeState(monkay.gameObject, MonkayState.going);
+        text.text = "GO!";
+    }
+
+    public void OnBack()
+    {
+        //orphan.cameraLookAt.transform.parent.Rotate(0, 180, 0);
+        jumpOnBackCutSceneCamera.SetActive(true);
+        timer = Time.time + jumpOnBackCutSceneDuration;
+
+        if (state == MonkayState.onBack)
+        {
+            ChangeState(monkay.gameObject, MonkayState.following);
+        }
+        else
+        {
+            MonkayVisible(!monkay.character.GetComponent<CapsuleCollider>().enabled);
+            ChangeState(monkay.gameObject, MonkayState.onBack);
+        }
+    }
+
+    public void Yell()
+    {
+        currentChar.character.GetComponent<SoundMaker>().Sound(100);
     }
 
 	// Update is called once per frame
@@ -203,52 +255,35 @@ public class MonkayCommands : MonoBehaviour {
             orphan.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
         }
 
+        //COMMANDS
+        DisActivateAllOptions();
+
+        options[6].active = true;
 
         if (currentChar == orphan)
         {
             if (state != MonkayState.onBack)
             {
-                if (Input.GetKeyDown(settings.wait) && !monkay.character.IsBeingChased()) //WAIT
+                if (!monkay.character.IsBeingChased()) //WAIT
                 {
-                    ChangeState(monkay.gameObject, MonkayState.waiting);
-                    text.text = "WAIT";
+                    options[1].active = true;
                 }
-                if (Input.GetKeyDown(settings.followMe)) //TO ME
+                //if (Input.GetKeyDown(settings.followMe)) //TO ME
                 {
-                    if (!monkay.Visible())
-                    {
-                        monkay.character.transform.position = transform.position - transform.forward * 5;
-                    }
-                    ChangeState(monkay.gameObject, MonkayState.following);
-                    text.text = "COME HERE";
+                    options[2].active = true;
                 }
-                if (Input.GetKeyDown(settings.go)) //GO
+                //if (Input.GetKeyDown(settings.go)) //GO
                 {
-                    directionTarget.Go(transform);
-                    ChangeState(monkay.gameObject, MonkayState.going);
-                    text.text = "GO!";
+                    options[3].active = true;
                 }
             }
-            if(Input.GetKeyDown(settings.onMyBack) 
-                && (state == MonkayState.following || state == MonkayState.waiting)
+            if((state == MonkayState.following || state == MonkayState.waiting || state == MonkayState.onBack)
                 && !monkay.character.IsBeingChased() 
                 && !orphan.character.IsBeingChased() 
                 && Vector3.Distance(monkay.character.transform.position, orphan.character.transform.position) 
                 < maxDistanceFromPlayerOnBackCommand)
             {
-                //orphan.cameraLookAt.transform.parent.Rotate(0, 180, 0);
-                jumpOnBackCutSceneCamera.SetActive(true);
-                timer = Time.time + jumpOnBackCutSceneDuration;
-
-                if(state == MonkayState.onBack)
-                {
-                    ChangeState(monkay.gameObject, MonkayState.following);
-                }
-                else
-                {
-                    MonkayVisible(!monkay.character.GetComponent<CapsuleCollider>().enabled);
-                    ChangeState(monkay.gameObject, MonkayState.onBack);
-                }
+                options[4].active = true;
             }
 
             if (jumpOnBackCutSceneCamera.active && timer < Time.time)
@@ -259,11 +294,11 @@ public class MonkayCommands : MonoBehaviour {
             }
 
         }
-        if ((Input.GetKeyDown(settings.changeCharactrs) && !orphan.character.IsBeingChased())
+        if (state != MonkayState.onBack
+            && (!orphan.character.IsBeingChased())
                 || (orphan.character.IsBeingChased() && currentChar != orphan)) // Switch
         {
-            text.text = "";
-            SwitchCharacters();
+            options[5].active = true;
         }
 
     }

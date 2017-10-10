@@ -109,6 +109,8 @@
     <Compile Include="Assets\Scripts\Patrol\Seeing.cs" />
     <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
     <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
+    <Compile Include="Assets\Scripts\Player Control\CircleOption.cs" />
+    <Compile Include="Assets\Scripts\Player Control\CircleSelect.cs" />
     <Compile Include="Assets\Scripts\Player Control\DirectionTarget.cs" />
     <Compile Include="Assets\Scripts\Player Control\Interactable.cs" />
     <Compile Include="Assets\Scripts\Player Control\Interactions.cs" />
