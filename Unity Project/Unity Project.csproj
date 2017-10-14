@@ -110,6 +110,7 @@
     <Compile Include="Assets\Scripts\Patrol\PatrolPortal.cs" />
     <Compile Include="Assets\Scripts\Patrol\Seeing.cs" />
     <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
+    <Compile Include="Assets\Scripts\Player Control\ActivateColliderWithTimer.cs" />
     <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
     <Compile Include="Assets\Scripts\Player Control\CircleOption.cs" />
     <Compile Include="Assets\Scripts\Player Control\CircleSelect.cs" />

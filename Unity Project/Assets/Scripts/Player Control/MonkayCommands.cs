@@ -64,9 +64,7 @@ public class MonkayCommands : MonoBehaviour {
     {
         if (currentChar.GetComponent<CameraSettings>().slowCharacterSwitch)
         {
-            GetComponent<LookAtMe>().speedMod = 1000;
-            GetComponent<FollowMe>().speed = switchCharactersCameraSpeed;
-            switchingChars = true;
+            SlowDownCamera(switchCharactersCameraSpeed);
             //timer = Time.time + timerDur;
         }
 
@@ -136,6 +134,13 @@ public class MonkayCommands : MonoBehaviour {
     void Follow(GameObject character)
     {
         GetComponent<FollowMe>().Follow(character.GetComponent<CameraReferencesHolder>().cameraPose);
+    }
+
+    public void SlowDownCamera(float speed)
+    {
+        GetComponent<LookAtMe>().speedMod = 1000;
+        GetComponent<FollowMe>().speed = speed;
+        switchingChars = true;
     }
 
     // Use this for initialization

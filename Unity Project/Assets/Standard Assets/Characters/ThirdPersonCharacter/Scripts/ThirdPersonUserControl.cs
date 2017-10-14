@@ -16,6 +16,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         public bool beingChased;
 
+        public bool moveForward;
+
         public void Chase(bool chased)
         {
             beingChased = chased;
@@ -42,6 +44,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Start()
         {
+            moveForward = false;
             // get the transform of the main camera
             if (Camera.main != null)
             {
@@ -75,6 +78,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+            if(moveForward)
+            v = 0.1f;
+
             crouch = Input.GetKey(KeyCode.C);
 
             // calculate move direction to pass to character
