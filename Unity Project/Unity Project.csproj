@@ -91,6 +91,7 @@
     <Compile Include="Assets\ConeCollider\Samples\Sample_3\PlayerMove.cs" />
     <Compile Include="Assets\ConeCollider\Script\ColliderTest.cs" />
     <Compile Include="Assets\ConeCollider\Script\ConeCollider.cs" />
+    <Compile Include="Assets\Packages\BarShader_Simple\Scripts\DemoBarAnimator.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPortal.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSettings.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Assets\Scripts\Camera\SetPositionFromCameraSettings.cs" />
     <Compile Include="Assets\Scripts\Camera\SimpleMouseRotatorSetFromCameraSettings.cs" />
     <Compile Include="Assets\Scripts\CharakterPortal.cs" />
+    <Compile Include="Assets\Scripts\HUD\Bar.cs" />
     <Compile Include="Assets\Scripts\Patrol\BeingSeen.cs" />
     <Compile Include="Assets\Scripts\Patrol\PatrolHoler.cs" />
     <Compile Include="Assets\Scripts\Patrol\Patroling.cs" />
@@ -112,20 +114,25 @@
     <Compile Include="Assets\Scripts\Player Control\CircleOption.cs" />
     <Compile Include="Assets\Scripts\Player Control\CircleSelect.cs" />
     <Compile Include="Assets\Scripts\Player Control\DirectionTarget.cs" />
+    <Compile Include="Assets\Scripts\Player Control\Hunger.cs" />
     <Compile Include="Assets\Scripts\Player Control\Interactable.cs" />
     <Compile Include="Assets\Scripts\Player Control\Interactions.cs" />
+    <Compile Include="Assets\Scripts\Player Control\InteractionsControl.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayCommands.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayGoCrazy.cs" />
     <Compile Include="Assets\Scripts\Player Control\MonkayTargetChanger.cs" />
     <Compile Include="Assets\Scripts\Player Control\PlayerControlSettings.cs" />
     <Compile Include="Assets\Scripts\Player Control\PlayerSkills.cs" />
     <Compile Include="Assets\Scripts\Player Control\SoundMaker.cs" />
+    <Compile Include="Assets\Scripts\Player Control\Throwing.cs" />
     <Compile Include="Assets\Scripts\Player Control\WalkSounderWithUser.cs" />
     <Compile Include="Assets\Scripts\Selfdestruct.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ConeCollider\readme_en.txt" />
     <None Include="Assets\ConeCollider\readme_jp.txt" />
+    <None Include="Assets\Packages\BarShader_Simple\Readme.txt" />
+    <None Include="Assets\Packages\BarShader_Simple\Shaders\SimpleBar.shader" />
     <None Include="Assets\Shaders\InteractableOutline.shader" />
     <None Include="Assets\Shaders\standard.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

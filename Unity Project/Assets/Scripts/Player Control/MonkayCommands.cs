@@ -48,6 +48,8 @@ public class MonkayCommands : MonoBehaviour {
 
     public float distanceFromTargetTriggeringBaseSpeed;
 
+    public CircleSelect circleSelect;
+
     public float GetDistanceFormDirectionTarget()
     {
         return Vector3.Distance(directionTarget.transform.position, monkay.character.transform.position);
@@ -70,11 +72,13 @@ public class MonkayCommands : MonoBehaviour {
 
         if (currentChar == orphan)
         {
+            GetComponent<PlayerSkills>().circleSelect.UnclockAllOptions(false);
             ChangeToChar(monkay.gameObject);
             ChangeState(monkay.gameObject, MonkayState.controled);
         }
         else
         {
+            GetComponent<PlayerSkills>().circleSelect.UnclockAllOptions(true);
             ChangeToChar(orphan.gameObject);
             ChangeState(monkay.gameObject, MonkayState.waiting);
         }
@@ -136,7 +140,6 @@ public class MonkayCommands : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        options = GetComponent<CircleSelect>().options;
 
         settings = GetComponent<PlayerControlSettings>();
 
@@ -162,14 +165,6 @@ public class MonkayCommands : MonoBehaviour {
             monkay.character.GetComponent<CapsuleCollider>().enabled = visible;
             monkay.character.GetComponent<WalkSounderWithUser>().enabled = visible;
             monkay.character.GetComponent<MonkayGoCrazy>().enabled = visible;
-        }
-    }
-
-    void DisActivateAllOptions()
-    {
-        foreach(CircleOption option in options)
-        {
-            option.active = false;
         }
     }
 
@@ -256,9 +251,9 @@ public class MonkayCommands : MonoBehaviour {
         }
 
         //COMMANDS
-        DisActivateAllOptions();
+        circleSelect.UnclockAllOptions(false);
 
-        options[6].active = true;
+        circleSelect.GetOption(CircleSelect.Action.yell).Unlock(true);
 
         if (currentChar == orphan)
         {
@@ -266,15 +261,15 @@ public class MonkayCommands : MonoBehaviour {
             {
                 if (!monkay.character.IsBeingChased()) //WAIT
                 {
-                    options[1].active = true;
+                    circleSelect.GetOption(CircleSelect.Action.wait).Unlock(true);
                 }
                 //if (Input.GetKeyDown(settings.followMe)) //TO ME
                 {
-                    options[2].active = true;
+                    circleSelect.GetOption(CircleSelect.Action.follow).Unlock(true);
                 }
                 //if (Input.GetKeyDown(settings.go)) //GO
                 {
-                    options[3].active = true;
+                    circleSelect.GetOption(CircleSelect.Action.go).Unlock(true);
                 }
             }
             if((state == MonkayState.following || state == MonkayState.waiting || state == MonkayState.onBack)
@@ -283,7 +278,7 @@ public class MonkayCommands : MonoBehaviour {
                 && Vector3.Distance(monkay.character.transform.position, orphan.character.transform.position) 
                 < maxDistanceFromPlayerOnBackCommand)
             {
-                options[4].active = true;
+                circleSelect.GetOption(CircleSelect.Action.onBack).Unlock(true);
             }
 
             if (jumpOnBackCutSceneCamera.active && timer < Time.time)
@@ -298,7 +293,7 @@ public class MonkayCommands : MonoBehaviour {
             && (!orphan.character.IsBeingChased())
                 || (orphan.character.IsBeingChased() && currentChar != orphan)) // Switch
         {
-            options[5].active = true;
+            circleSelect.GetOption(CircleSelect.Action.switchChar).Unlock(true);
         }
 
     }

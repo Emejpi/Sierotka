@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class CircleSelect : MonoBehaviour {
 
-    public List<CircleOption> options;
+    public enum Action
+    {
+        wait,
+        follow,
+        go,
+        onBack,
+        switchChar,
+        yell,
+        showFildsOfView,
+        none,
+        mute,
+        shadowMonkay
+    }
+
+    public int mouseKeyNum;
+
+    List<CircleOption> options;
 
     public GameObject optionPref;
 
@@ -15,11 +31,29 @@ public class CircleSelect : MonoBehaviour {
 
     public Vector3 mosePoseOnClick;
 
-    MonkayCommands commands;
+    public MonkayCommands commands;
+    PlayerSkills skills;
 
-	// Use this for initialization
-	void Start () {
-        commands = GetComponent<MonkayCommands>();
+    public void UnclockAllOptions(bool unlock)
+    {
+        foreach (CircleOption option in options)
+        {
+            option.Unlock(unlock);
+        }
+    }
+
+    public CircleOption GetOption(Action name)
+    {
+        foreach (CircleOption option in options)
+            if (option.name == name)
+                return option;
+
+        return options[0];
+    }
+
+    // Use this for initialization
+    void Start () {
+        skills = commands.GetComponent<PlayerSkills>();
 
         AddOptionsFromHolder();
 
@@ -79,8 +113,8 @@ public class CircleSelect : MonoBehaviour {
 
     void PleaceOption(Vector2 pose, CircleOption option)
     {
-        option.body = Instantiate(optionPref, 
-            transform.position + (Vector3)pose + new Vector3(0, 0, 1), Quaternion.identity);
+        option.body = Instantiate(optionPref,
+            optionsBodysHolder.transform.position + (Vector3)pose, Quaternion.identity);
 
         option.body.transform.parent = optionsBodysHolder.transform;
 
@@ -105,30 +139,34 @@ public class CircleSelect : MonoBehaviour {
 
     void ExecuiteOption(CircleOption option)
     {
-        switch(option.actionIndex)
+        switch(option.name)
         {
-            case 1:
+            case Action.wait:
                 commands.Wait();
                 break;
 
-            case 2:
+            case Action.follow:
                 commands.FollowMe();
                 break;
 
-            case 3:
+            case Action.go:
                 commands.GO();
                 break;
 
-            case 4:
+            case Action.onBack:
                 commands.OnBack();
                 break;
 
-            case 5:
+            case Action.switchChar:
                 commands.SwitchCharacters();
                 break;
 
-            case 6:
+            case Action.yell:
                 commands.Yell();
+                break;
+
+            default:
+                skills.PrepareSkill(option);
                 break;
         }
     }
@@ -149,19 +187,19 @@ public class CircleSelect : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetMouseButtonDown(1))
+		if(Input.GetMouseButtonDown(mouseKeyNum))
         {
-            GetComponent<CameraPortal>().Freeze(true);
+            commands.GetComponent<CameraPortal>().Freeze(true);
             ShowOptions(true);
             mosePoseOnClick = Input.mousePosition;
         }
-        else if(Input.GetMouseButton(1))
+        else if(Input.GetMouseButton(mouseKeyNum))
         {
             Light(ChoseOptionBasedOnPosition());
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(mouseKeyNum))
         {
-            GetComponent<CameraPortal>().Freeze(false);
+            commands.GetComponent<CameraPortal>().Freeze(false);
             ChooseAndHide();
         }
 	}

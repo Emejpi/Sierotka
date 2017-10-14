@@ -12,6 +12,11 @@ public class Interactions : MonoBehaviour {
     public Shader standard;
     public Shader outlined;
 
+    public Interactable GetCurrentInter()
+    {
+        return currentInteractable;
+    }
+
     // Use this for initialization
     void Start () {
         settings = GetComponent<PlayerControlSettings>();
@@ -37,10 +42,4 @@ public class Interactions : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		if(Input.GetKeyDown(settings.interact))
-        {
-
-        }
-	}
 }
