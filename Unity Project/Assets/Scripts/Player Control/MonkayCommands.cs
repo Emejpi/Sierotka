@@ -161,16 +161,21 @@ public class MonkayCommands : MonoBehaviour {
 
         ChangeState(monkay.gameObject, MonkayState.following);
     }
-	
+
+    void CharacterVisible(CameraReferencesHolder characterHold, bool visible)
+    {
+        for (int i = 0; i < characterHold.character.transform.childCount; i++)
+        {
+            characterHold.character.transform.GetChild(i).gameObject.SetActive(visible);
+            characterHold.character.GetComponent<CapsuleCollider>().enabled = visible;
+            characterHold.character.GetComponent<WalkSounderWithUser>().enabled = visible;
+            characterHold.character.GetComponent<MonkayGoCrazy>().enabled = visible;
+        }
+    }
+
     void MonkayVisible(bool visible)
     {
-        for (int i = 0; i < monkay.character.transform.childCount; i++)
-        {
-            monkay.character.transform.GetChild(i).gameObject.SetActive(visible);
-            monkay.character.GetComponent<CapsuleCollider>().enabled = visible;
-            monkay.character.GetComponent<WalkSounderWithUser>().enabled = visible;
-            monkay.character.GetComponent<MonkayGoCrazy>().enabled = visible;
-        }
+        CharacterVisible(monkay, visible);
     }
 
     public void Wait()
@@ -195,6 +200,8 @@ public class MonkayCommands : MonoBehaviour {
         ChangeState(monkay.gameObject, MonkayState.going);
         text.text = "GO!";
     }
+
+    //public void Hide
 
     public void OnBack()
     {

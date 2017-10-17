@@ -6,7 +6,8 @@ public class Interactable : MonoBehaviour {
 
     public enum Interaction
     {
-        pickable
+        pickable,
+        hide
     }
     public Interaction inter;
 

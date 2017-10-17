@@ -133,10 +133,10 @@
     <Compile Include="Assets\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ConeCollider\readme_en.txt" />
-    <None Include="Assets\ConeCollider\readme_jp.txt" />
-    <None Include="Assets\Packages\BarShader_Simple\Readme.txt" />
-    <None Include="Assets\Packages\BarShader_Simple\Shaders\SimpleBar.shader" />
+    <None Include="Assets\Imports\ConeCollider\readme_en.txt" />
+    <None Include="Assets\Imports\ConeCollider\readme_jp.txt" />
+    <None Include="Assets\Imports\Packages\BarShader_Simple\Readme.txt" />
+    <None Include="Assets\Imports\Packages\BarShader_Simple\Shaders\SimpleBar.shader" />
     <None Include="Assets\Shaders\InteractableOutline.shader" />
     <None Include="Assets\Shaders\standard.shader" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

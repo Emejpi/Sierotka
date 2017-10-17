@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bar : MonoBehaviour {
 
@@ -20,7 +21,7 @@ public class Bar : MonoBehaviour {
     void ChangeCurrentValue(float value)
     {
         currentDelta -= currentValue - value;
-        GetComponent<SpriteRenderer>().material.SetFloat("_Delta", currentDelta);
+        GetComponent<Image>().material.SetFloat("_Delta", currentDelta);
 
         currentValue = value;
 
@@ -37,7 +38,7 @@ public class Bar : MonoBehaviour {
     public void SetFill(float value)
     {
         ChangeCurrentValue(value);
-        GetComponent<SpriteRenderer>().material.SetFloat("_Fill", value);
+        GetComponent<Image>().material.SetFloat("_Fill", value);
     }
 
     public void AddFill(float value)
@@ -62,7 +63,7 @@ public class Bar : MonoBehaviour {
                 currentDelta = -(currentValue);
 
             currentDelta += ( currentDelta>0?-1:1) * Time.deltaTime * deltaSpeed;
-            GetComponent<SpriteRenderer>().material.SetFloat("_Delta", currentDelta);
+            GetComponent<Image>().material.SetFloat("_Delta", currentDelta);
         }
 	}
 }
