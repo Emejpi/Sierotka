@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraPortal : MonoBehaviour {
 
-    public GameObject orange;  
+    public PatrolHoler orange;  
 
     public void Freeze(bool freeze)
     {
@@ -14,6 +14,6 @@ public class CameraPortal : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        orange = GameObject.Find("orange");
+        orange = GameObject.Find("orange").GetComponent<PatrolHoler>();
     }
 }

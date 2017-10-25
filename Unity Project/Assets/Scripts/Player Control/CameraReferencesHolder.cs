@@ -10,6 +10,11 @@ public class CameraReferencesHolder : MonoBehaviour {
 
     public SkinnedMeshRenderer rend;
 
+    public bool Enabled()
+    {
+        return rend.gameObject.active;
+    }
+
     public bool Visible()
     {
         return rend.isVisible;

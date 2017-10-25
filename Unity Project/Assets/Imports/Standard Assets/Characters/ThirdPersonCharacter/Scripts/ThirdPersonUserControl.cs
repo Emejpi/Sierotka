@@ -18,6 +18,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         public bool moveForward;
 
+        bool active;
+
+        public void SetActive(bool active) { this.active = active; }
+
         public void Chase(bool chased)
         {
             beingChased = chased;
@@ -44,6 +48,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Start()
         {
+            active = true;
             moveForward = false;
             // get the transform of the main camera
             if (Camera.main != null)
@@ -78,6 +83,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             // read inputs
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+            if(!active)
+            {
+                h = 0;
+                v = 0;
+            }
 
             if(moveForward)
             v = 0.1f;

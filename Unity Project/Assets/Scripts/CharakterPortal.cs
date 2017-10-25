@@ -6,4 +6,5 @@ public class CharakterPortal : MonoBehaviour {
 
     public Transform rightHand;
     public PlayerControlSettings settings;
+    public CameraPortal cameraPortal;
 }

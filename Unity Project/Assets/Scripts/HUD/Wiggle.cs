@@ -46,6 +46,11 @@ public class Wiggle : MonoBehaviour {
     [Range(0.0f, 100.0f)]
     public float rangeFrom;
 
+    public void SetPercentRange(float maxDistance, float currentDistance)
+    {
+        rangeFrom = currentDistance * 100 / maxDistance;
+    }
+
     void ValueFromRange(float percentRange, Vector2 minMax, out float value)
     {
         value = ((minMax.y - minMax.x) * percentRange / 100) + minMax.x;

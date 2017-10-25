@@ -18,7 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.1.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion>4</LangVersion>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,11 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_1;UNITY_2017_1;UNITY_2017;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
-<<<<<<< HEAD
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-=======
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
->>>>>>> 0528189f53db06e661717d289c45ed1244efd589
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,11 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_1;UNITY_2017_1;UNITY_2017;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
-<<<<<<< HEAD
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-=======
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
->>>>>>> 0528189f53db06e661717d289c45ed1244efd589
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -84,15 +76,6 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Unity Project.Plugins.csproj">
-      <Project>{BBC917CD-3060-7709-2415-E10F5BD4FF73}</Project>
-      <Name>Unity Project.Plugins</Name>
-    </ProjectReference>
-=======
->>>>>>> 0528189f53db06e661717d289c45ed1244efd589
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Imports\ConeCollider\Samples\Sample_1\CameraRotate.cs" />
@@ -167,23 +150,27 @@
     <Compile Include="Assets\Scripts\Patrol\PatrolPortal.cs" />
     <Compile Include="Assets\Scripts\Patrol\Seeing.cs" />
     <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
-    <Compile Include="Assets\Scripts\Player Control\ActivateColliderWithTimer.cs" />
     <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
-    <Compile Include="Assets\Scripts\Player Control\CircleOption.cs" />
-    <Compile Include="Assets\Scripts\Player Control\CircleSelect.cs" />
-    <Compile Include="Assets\Scripts\Player Control\DirectionTarget.cs" />
-    <Compile Include="Assets\Scripts\Player Control\Hunger.cs" />
-    <Compile Include="Assets\Scripts\Player Control\Interactable.cs" />
-    <Compile Include="Assets\Scripts\Player Control\Interactions.cs" />
-    <Compile Include="Assets\Scripts\Player Control\InteractionsControl.cs" />
-    <Compile Include="Assets\Scripts\Player Control\MonkayCommands.cs" />
-    <Compile Include="Assets\Scripts\Player Control\MonkayGoCrazy.cs" />
-    <Compile Include="Assets\Scripts\Player Control\MonkayTargetChanger.cs" />
+    <Compile Include="Assets\Scripts\Player Control\interactions\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Player Control\interactions\Interactions.cs" />
+    <Compile Include="Assets\Scripts\Player Control\interactions\InteractionsControl.cs" />
+    <Compile Include="Assets\Scripts\Player Control\medalion\FloatHolder.cs" />
+    <Compile Include="Assets\Scripts\Player Control\medalion\MedalionTriggersHolder.cs" />
+    <Compile Include="Assets\Scripts\Player Control\monkay\DirectionTarget.cs" />
+    <Compile Include="Assets\Scripts\Player Control\monkay\MonkayCommands.cs" />
+    <Compile Include="Assets\Scripts\Player Control\monkay\MonkayGoCrazy.cs" />
+    <Compile Include="Assets\Scripts\Player Control\monkay\MonkayTargetChanger.cs" />
     <Compile Include="Assets\Scripts\Player Control\PlayerControlSettings.cs" />
-    <Compile Include="Assets\Scripts\Player Control\PlayerSkills.cs" />
-    <Compile Include="Assets\Scripts\Player Control\SoundMaker.cs" />
+    <Compile Include="Assets\Scripts\Player Control\skills\ActivateColliderWithTimer.cs" />
+    <Compile Include="Assets\Scripts\Player Control\skills\CircleOption.cs" />
+    <Compile Include="Assets\Scripts\Player Control\skills\CircleSelect.cs" />
+    <Compile Include="Assets\Scripts\Player Control\skills\Hunger.cs" />
+    <Compile Include="Assets\Scripts\Player Control\skills\PlayerSkills.cs" />
+    <Compile Include="Assets\Scripts\Player Control\sound\SoundMaker.cs" />
+    <Compile Include="Assets\Scripts\Player Control\sound\SoundOnCollision.cs" />
+    <Compile Include="Assets\Scripts\Player Control\sound\WalkSounderWithUser.cs" />
     <Compile Include="Assets\Scripts\Player Control\Throwing.cs" />
-    <Compile Include="Assets\Scripts\Player Control\WalkSounderWithUser.cs" />
+    <Compile Include="Assets\Scripts\ReputationControl.cs" />
     <Compile Include="Assets\Scripts\Selfdestruct.cs" />
   </ItemGroup>
   <ItemGroup>

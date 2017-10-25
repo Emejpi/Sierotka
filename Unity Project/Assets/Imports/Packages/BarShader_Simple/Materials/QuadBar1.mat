@@ -11,6 +11,7 @@ Material:
   m_ShaderKeywords: LEFT_TO_RIGHT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -24,8 +25,8 @@ Material:
     m_Floats:
     - _Border: 0.01
     - _ColorMask: 15
-    - _Delta: -0.22
-    - _Fill: 0.5
+    - _Delta: 0
+    - _Fill: 100
     - _LEFT_TO_RIGHT: 1
     - _Stencil: 0
     - _StencilComp: 8

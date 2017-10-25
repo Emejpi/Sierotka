@@ -83,6 +83,8 @@ public class Throwing : MonoBehaviour {
             }
             else if (Input.GetKeyUp(settings.interact))
             {
+                GetComponent<CharakterPortal>().cameraPortal.orange.reputation.LoseIfSaveZone();
+
                 throwingDestination.GetComponent<MeshRenderer>().enabled = false;
 
                 GetComponent<CharakterPortal>().settings.GetComponent<FollowMe>().target = transform.parent.GetComponent<CameraReferencesHolder>().cameraPose;
@@ -108,6 +110,7 @@ public class Throwing : MonoBehaviour {
 
     public bool ThrowBallAtTargetLocation(Vector3 targetLocation, float initialVelocity)
     {
+
         Vector3 direction = (targetLocation - transform.position).normalized;
         float distance = Vector3.Distance(targetLocation, transform.position);
 

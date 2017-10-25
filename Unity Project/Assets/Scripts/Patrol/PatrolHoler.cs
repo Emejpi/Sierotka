@@ -6,8 +6,11 @@ public class PatrolHoler : MonoBehaviour {
 
     List<PatrolPortal> patrolPortlas;
 
+    public ReputationControl reputation;
+
     void Start()
     {
+        reputation = GetComponent<ReputationControl>();
         patrolPortlas = new List<PatrolPortal>();
     }
 
@@ -33,4 +36,5 @@ public class PatrolHoler : MonoBehaviour {
     {
         patrolPortlas.Add(portal);
     }
+
 }

@@ -26,6 +26,8 @@ public class Patroling : MonoBehaviour
 
     GameObject susObj;
 
+    PatrolPortal portal;
+
     void ChangeTarget(Transform target)
     {
         if (target.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl>())
@@ -51,12 +53,17 @@ public class Patroling : MonoBehaviour
         this.state = state;
     }
 
+    bool IsReputation(ReputationControl.State reput) { return portal.orange.reputation.GetState() == reput; }
+
     public void Chase(GameObject target)
     {
-        ChangeState(State.chasing);
-        ChangeTarget(target.transform);
-        ai.moveSpeed = 1;
-        timer = Time.time + chasingDur;
+        if (IsReputation(ReputationControl.State.veryBad))
+        {
+            ChangeState(State.chasing);
+            ChangeTarget(target.transform);
+            ai.moveSpeed = 1;
+            timer = Time.time + chasingDur;
+        }
     }
 
     // Use this for initialization
@@ -66,16 +73,19 @@ public class Patroling : MonoBehaviour
         ChangeTarget(points[0]);
         ai.moveSpeed = 0.5f;
         state = State.patroling;
+        portal = GetComponent<PatrolPortal>();
     }
 
     public void Suspicious()
     {
-        ChangeState(State.suspicious);
-        susObj = Instantiate(suspiciousObject, ai.target.transform.position, Quaternion.identity);
-        ChangeTarget(susObj.transform.GetChild(0));
-        timer = Time.time + suspiciousDur;
-        ai.moveSpeed = 0.5f;
-
+        if (!IsReputation(ReputationControl.State.good))
+        {
+            ChangeState(State.suspicious);
+            susObj = Instantiate(suspiciousObject, ai.target.transform.position, Quaternion.identity);
+            ChangeTarget(susObj.transform.GetChild(0));
+            timer = Time.time + suspiciousDur;
+            ai.moveSpeed = 0.5f;
+        }
     }
 
     public void ChangePatrolPoint()
@@ -140,16 +150,16 @@ public class Patroling : MonoBehaviour
             //        DoISeeIt(body);
             //    break;
 
-            case "sound":
-                if (state == State.patroling)
-                {
-                    Suspicious();
-                }
-                if (state == State.suspicious)
-                {
-                    ai.target.transform.position = body.transform.position;
-                }
-                break;
+            //case "sound":
+            //    if (state == State.patroling)
+            //    {
+            //        Suspicious();
+            //    }
+            //    if (state == State.suspicious)
+            //    {
+            //        ai.target.transform.position = body.transform.position;
+            //    }
+            //    break;
 
         }
     }

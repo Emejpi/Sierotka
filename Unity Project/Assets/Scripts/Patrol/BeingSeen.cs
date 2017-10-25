@@ -19,6 +19,11 @@ public class BeingSeen : MonoBehaviour
             case "interactable":
                 inters.ChangeInter(body.gameObject.GetComponent<Interactable>(), gameObject);
                 break;
+
+            case "medalion trigger":
+                if (GetComponent<MedalionTriggersHolder>())
+                    GetComponent<MedalionTriggersHolder>().AddTrigger(body.gameObject);
+                break;
         }
     }
 
@@ -29,6 +34,11 @@ public class BeingSeen : MonoBehaviour
             case "interactable":
                 if (inters.currentInteractable == body.gameObject.GetComponent<Interactable>())
                     inters.ChangeInter(null, gameObject);
+                break;
+
+            case "medalion trigger":
+                if (GetComponent<MedalionTriggersHolder>())
+                    GetComponent<MedalionTriggersHolder>().RemoveTrigger(body.gameObject);
                 break;
         }
     }

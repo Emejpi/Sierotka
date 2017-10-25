@@ -20,6 +20,13 @@ public class Bar : MonoBehaviour {
 
     void ChangeCurrentValue(float value)
     {
+        print(1);
+
+        //if ((currentValue == 1 && value > 0) || (currentValue == 0 && value < 0))
+        //    return;
+
+        print(2);
+
         currentDelta -= currentValue - value;
         GetComponent<Image>().material.SetFloat("_Delta", currentDelta);
 
@@ -50,17 +57,18 @@ public class Bar : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        currentDelta = 0;
         SetFill(baseValue);
+        currentDelta = 0;
+        GetComponent<Image>().material.SetFloat("_Delta", currentDelta);
     }
 	// Update is called once per frame
 	void Update () {
 		if(currentDelta != 0)
         {
-            if (currentDelta > 1 - currentValue)
-                currentDelta = 1 - currentValue;
-            else if (currentDelta < -(currentValue))
-                currentDelta = -(currentValue);
+            //if (currentDelta < -1 + currentValue)
+            //    currentDelta = -1 + currentValue;
+            //else if (currentDelta > (currentValue))
+            //    currentDelta = (currentValue);
 
             currentDelta += ( currentDelta>0?-1:1) * Time.deltaTime * deltaSpeed;
             GetComponent<Image>().material.SetFloat("_Delta", currentDelta);
