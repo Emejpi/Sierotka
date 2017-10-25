@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Maps/testMapMichal.unity
+- path: Assets/Maps/lvl_1_test.unity
   isLoaded: 1
   isActive: 1
