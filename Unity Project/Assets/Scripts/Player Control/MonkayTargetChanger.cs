@@ -8,6 +8,8 @@ public class MonkayTargetChanger : MonoBehaviour {
     public Vector2 timerDur;
     public float distance;
 
+    public bool halfCircel;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +17,7 @@ public class MonkayTargetChanger : MonoBehaviour {
 	
     public void Change()
     {
-        float value = Random.Range(-Mathf.PI, 0);
+        float value = Random.Range(-Mathf.PI, halfCircel? 0 : Mathf.PI);
         transform.position = transform.parent.position + new Vector3(Mathf.Cos(value), 0, Mathf.Sin(value)) * distance;
 
         timer = Time.time + Random.Range(timerDur.x, timerDur.y);
