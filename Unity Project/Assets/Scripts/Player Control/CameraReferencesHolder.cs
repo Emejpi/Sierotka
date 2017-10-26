@@ -7,6 +7,8 @@ public class CameraReferencesHolder : MonoBehaviour {
     public GameObject cameraPoseFirstPerson;
     public GameObject cameraLookAt;
     public UnityStandardAssets.Characters.ThirdPerson.ThirdPersonUserControl character;
+    public GameObject monkayOnBackPoseRef;
+    public Attacher attacher;
 
     public SkinnedMeshRenderer rend;
 

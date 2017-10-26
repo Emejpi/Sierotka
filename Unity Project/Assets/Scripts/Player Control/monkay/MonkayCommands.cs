@@ -50,6 +50,10 @@ public class MonkayCommands : MonoBehaviour {
 
     public CircleSelect circleSelect;
 
+    bool monkayAttachedToBack;
+
+    float returnToNormalAfterBackTimer;
+
     public float GetDistanceFormDirectionTarget()
     {
         return Vector3.Distance(directionTarget.transform.position, monkay.character.transform.position);
@@ -145,6 +149,7 @@ public class MonkayCommands : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        monkayAttachedToBack = false;
 
         settings = GetComponent<PlayerControlSettings>();
 
@@ -222,26 +227,59 @@ public class MonkayCommands : MonoBehaviour {
             monkay.character.GetComponent<Animator>().CrossFade("Grounded", 1);
 
             ChangeState(monkay.gameObject, MonkayState.following);
-            monkay.character.enabled = false;
-            monkay.character.EnableAI(true);
-            monkay.character.SetActive(true);
+            DisenableEverythingMonkay(true);
+
+            monkay.character.GetComponent<LookAtMe>().LookAt(orphan.character.gameObject);
+            monkay.character.GetComponent<FollowMe>().Follow(null);
+
+            DetachFromBack();
+
+            returnToNormalAfterBackTimer = Time.time + 0.5f;
+
+            monkay.character.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
         else
         {
             monkay.character.GetComponent<Animator>().CrossFade("onBack", 1);
             //MonkayVisible(!monkay.character.GetComponent<CapsuleCollider>().enabled);
             ChangeState(monkay.gameObject, MonkayState.onBack);
-            monkay.character.EnableAI(false);
-            monkay.character.SetActive(false);
-            monkay.character.enabled = true;
+            DisenableEverythingMonkay(false);
 
-            monkay.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
+            monkay.character.GetComponent<LookAtMe>().LookAt(orphan.monkayOnBackPoseRef);
+            monkay.character.GetComponent<FollowMe>().Follow(orphan.monkayOnBackPoseRef);
+
+            monkay.character.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //monkay.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
         }
+    }
+
+    void DisenableEverythingMonkay(bool enable)
+    {
+        monkay.character.EnableAI(false);
+        //monkay.character.SetActive(enable);
+        monkay.character.enabled = !enable;
+        monkay.character.GetComponent<Rigidbody>().useGravity = enable;
+        monkay.character.GetComponent<Collider>().enabled = enable;
     }
 
     public void Yell()
     {
         currentChar.character.GetComponent<SoundMaker>().Sound(100);
+    }
+
+    void AttachToBack()
+    {
+        monkayAttachedToBack = true;
+        monkay.attacher.Attache();
+
+        //monkay.character.GetComponent<LookAtMe>().LookAt(null);
+        monkay.character.GetComponent<FollowMe>().Follow(null);
+    }
+
+    void DetachFromBack()
+    {
+        //monkayAttachedToBack = false;
+        monkay.attacher.DisAttache();
     }
 
 	// Update is called once per frame
@@ -288,28 +326,50 @@ public class MonkayCommands : MonoBehaviour {
 
         if (currentChar == orphan)
         {
-            if (state != MonkayState.onBack)
-            {
+
                 if (!monkay.character.IsBeingChased()) //WAIT
                 {
                     circleSelect.GetOption(CircleSelect.Action.wait).Unlock(true);
                 }
                 //if (Input.GetKeyDown(settings.followMe)) //TO ME
-                {
+                
                     circleSelect.GetOption(CircleSelect.Action.follow).Unlock(true);
-                }
+                
                 //if (Input.GetKeyDown(settings.go)) //GO
-                {
+                
                     circleSelect.GetOption(CircleSelect.Action.go).Unlock(true);
+
+            if (state != MonkayState.onBack)
+            {
+
+                if (monkayAttachedToBack && returnToNormalAfterBackTimer < Time.time) //RETURN TO NORMAL
+                {
+                    monkay.character.EnableAI(true);
+                    monkay.character.GetComponent<LookAtMe>().LookAt(null);
+                    monkayAttachedToBack = false;
                 }
             }
-            if((state == MonkayState.following || state == MonkayState.waiting || state == MonkayState.onBack)
+            else // MONKAY ON BACK
+            {
+                if (!monkayAttachedToBack &&
+                    Vector3.Distance(monkay.character.transform.position, orphan.monkayOnBackPoseRef.transform.position) < 0.1f)
+                {
+                    AttachToBack();
+                }
+            }
+
+            if ((state == MonkayState.following || state == MonkayState.waiting || state == MonkayState.onBack)
                 && !monkay.character.IsBeingChased() 
                 && !orphan.character.IsBeingChased() 
                 && Vector3.Distance(monkay.character.transform.position, orphan.character.transform.position) 
-                < maxDistanceFromPlayerOnBackCommand)
+                < maxDistanceFromPlayerOnBackCommand
+                && orphan.character.GetComponent<Rigidbody>().velocity.magnitude < 1f)
             {
                 circleSelect.GetOption(CircleSelect.Action.onBack).Unlock(true);
+
+                //if (state == MonkayState.following
+                //    && orphan.character.GetComponent<Rigidbody>().velocity.magnitude < 1f)
+                //    OnBack();
             }
 
             if (jumpOnBackCutSceneCamera.active && timer < Time.time)

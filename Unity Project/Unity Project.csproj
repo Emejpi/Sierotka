@@ -131,6 +131,8 @@
     <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\Imports\Standard Assets\Utility\WaypointProgressTracker.cs" />
     <Compile Include="Assets\Scripts\AnimationsSmoothTransition.cs" />
+    <Compile Include="Assets\Scripts\Attacher.cs" />
+    <Compile Include="Assets\Scripts\Attachment.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraPortal.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSettings.cs" />

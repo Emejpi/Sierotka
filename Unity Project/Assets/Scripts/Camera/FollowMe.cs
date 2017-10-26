@@ -36,6 +36,7 @@ public class FollowMe : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        transform.position = GetComponent<Lerper>().LerpVector3(transform.position, target.transform.position, speed);
+        if(target)
+            transform.position = GetComponent<Lerper>().LerpVector3(transform.position, target.transform.position, speed);
 	}
 }
