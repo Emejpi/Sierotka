@@ -34,6 +34,15 @@ public class CircleSelect : MonoBehaviour {
     public MonkayCommands commands;
     PlayerSkills skills;
 
+    List<CircleOption> queueCommands;
+    float timer;
+    public float timeBetweenCommands;
+
+    public bool EmptyQueue()
+    {
+        return queueCommands.Count == 0;
+    }
+    
     public void UnclockAllOptions(bool unlock)
     {
         foreach (CircleOption option in options)
@@ -53,6 +62,8 @@ public class CircleSelect : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        queueCommands = new List<CircleOption>();
+
         skills = commands.GetComponent<PlayerSkills>();
 
         AddOptionsFromHolder();
@@ -131,8 +142,12 @@ public class CircleSelect : MonoBehaviour {
     void ChooseAndHide()
     {
         CircleOption option = ChoseOptionBasedOnPosition();
-        
-        ExecuiteOption(option);
+
+        if(commands.state == MonkayCommands.MonkayState.onBack 
+            && option.name != Action.none 
+            && option.name != Action.yell)
+            queueCommands.Add(GetOption(Action.onBack));
+        queueCommands.Add(option);
 
         ShowOptions(false);
     }
@@ -141,6 +156,8 @@ public class CircleSelect : MonoBehaviour {
     {
         if (!option.active)
             return;
+
+        //if()
 
         switch (option.name)
         {
@@ -204,6 +221,13 @@ public class CircleSelect : MonoBehaviour {
         {
             commands.GetComponent<CameraPortal>().Freeze(false);
             ChooseAndHide();
+        }
+
+        if(queueCommands.Count > 0 && timer < Time.time)
+        {
+            ExecuiteOption(queueCommands[0]);
+            queueCommands.RemoveAt(0);
+            timer = Time.time + timeBetweenCommands;
         }
 	}
 }
