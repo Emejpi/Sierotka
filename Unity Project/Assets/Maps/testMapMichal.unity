@@ -4231,6 +4231,16 @@ Prefab:
       propertyPath: maxDistanceFromPlayerOnBackCommand
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114475375924589632, guid: c14399f2a3e58e346be305fab3f00505,
+        type: 2}
+      propertyPath: offBackBlandTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114475375924589632, guid: c14399f2a3e58e346be305fab3f00505,
+        type: 2}
+      propertyPath: onBackBlandTime
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c14399f2a3e58e346be305fab3f00505, type: 2}
   m_IsPrefabParent: 0
@@ -4589,7 +4599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 7
+  speed: 5
 --- !u!114 &1329932330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4602,7 +4612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speedMod: 1000
+  speedMod: 500
   takeFormMonaky: 0
 --- !u!1 &1335722243
 GameObject:

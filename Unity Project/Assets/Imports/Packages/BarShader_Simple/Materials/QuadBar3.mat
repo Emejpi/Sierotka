@@ -25,8 +25,8 @@ Material:
     m_Floats:
     - _Border: 0.01
     - _ColorMask: 15
-    - _Delta: 0.00012990809
-    - _Fill: 0.95
+    - _Delta: 0
+    - _Fill: 1
     - _LEFT_TO_RIGHT: 1
     - _Stencil: 0
     - _StencilComp: 8

@@ -54,6 +54,9 @@ public class MonkayCommands : MonoBehaviour {
 
     float returnToNormalAfterBackTimer;
 
+    public float onBackBlandTime;
+    public float offBackBlandTime;
+
     public float GetDistanceFormDirectionTarget()
     {
         return Vector3.Distance(directionTarget.transform.position, monkay.character.transform.position);
@@ -224,7 +227,7 @@ public class MonkayCommands : MonoBehaviour {
 
         if (state == MonkayState.onBack)
         {
-            monkay.character.GetComponent<Animator>().CrossFade("Grounded", 1);
+            monkay.character.GetComponent<Animator>().CrossFade("Grounded", offBackBlandTime);
 
             ChangeState(monkay.gameObject, MonkayState.following);
             DisenableEverythingMonkay(true);
@@ -240,7 +243,7 @@ public class MonkayCommands : MonoBehaviour {
         }
         else
         {
-            monkay.character.GetComponent<Animator>().CrossFade("onBack", 1);
+            monkay.character.GetComponent<Animator>().CrossFade("onBack", onBackBlandTime);
             //MonkayVisible(!monkay.character.GetComponent<CapsuleCollider>().enabled);
             ChangeState(monkay.gameObject, MonkayState.onBack);
             DisenableEverythingMonkay(false);
