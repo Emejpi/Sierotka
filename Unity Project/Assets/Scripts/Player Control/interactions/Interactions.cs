@@ -19,8 +19,8 @@ public class Interactions : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        settings = GetComponent<PlayerControlSettings>();
-        commands = GetComponent<MonkayCommands>();
+        settings = Camera.main.GetComponent<PlayerControlSettings>();
+        commands = Camera.main.GetComponent<MonkayCommands>();
     }
 
     public void ChangeInter(Interactable inter, GameObject triggerer)

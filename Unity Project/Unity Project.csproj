@@ -152,7 +152,7 @@
     <Compile Include="Assets\Scripts\Patrol\PatrolPortal.cs" />
     <Compile Include="Assets\Scripts\Patrol\Seeing.cs" />
     <Compile Include="Assets\Scripts\Patrol\SoundDetector.cs" />
-    <Compile Include="Assets\Scripts\Player Control\CameraReferencesHolder.cs" />
+    <Compile Include="Assets\Scripts\Player Control\CharacterMenager.cs" />
     <Compile Include="Assets\Scripts\Player Control\interactions\Interactable.cs" />
     <Compile Include="Assets\Scripts\Player Control\interactions\Interactions.cs" />
     <Compile Include="Assets\Scripts\Player Control\interactions\InteractionsControl.cs" />

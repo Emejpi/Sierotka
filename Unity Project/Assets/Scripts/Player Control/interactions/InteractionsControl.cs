@@ -14,7 +14,6 @@ public class InteractionsControl : MonoBehaviour {
     void Start()
     {
         settings = GetComponent<PlayerControlSettings>();
-        inters = GetComponent<Interactions>();
         commands = GetComponent<MonkayCommands>();
     }
 
@@ -22,6 +21,7 @@ public class InteractionsControl : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(settings.interact))
         {
+            inters = commands.currentChar.character.GetComponent<Interactions>();
             Interactable inter = inters.GetCurrentInter();
             if (inter)
             {
@@ -35,13 +35,9 @@ public class InteractionsControl : MonoBehaviour {
                         break;
 
                     case Interactable.Interaction.hide:
-                        if(commands.currentChar == commands.orphan
-                            && commands.orphan.Enabled()
-                            && commands.monkay.Enabled())
-                            commands.circleSelect.ExecuiteOption(
-                                commands.circleSelect.GetOption(CircleSelect.Action.onBack));
-
-                        commands.CharacterVisible(commands.currentChar, !commands.currentChar.Enabled(), true);
+                        bool hide = commands.currentChar.IsControledByPLayer();
+                        commands.currentChar.Hide(hide, inter.anim, inter.animStartPose, 1);
+                        //commands.currentChar.
                         //commands.currentChar
                         break;
 

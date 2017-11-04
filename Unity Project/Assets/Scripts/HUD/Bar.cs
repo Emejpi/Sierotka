@@ -22,8 +22,8 @@ public class Bar : MonoBehaviour {
     {
         print(1);
 
-        //if ((currentValue == 1 && value > 0) || (currentValue == 0 && value < 0))
-        //    return;
+        if ((currentValue == 1 && value > 1) || (currentValue == 0 && value < 0))
+            return;
 
         print(2);
 

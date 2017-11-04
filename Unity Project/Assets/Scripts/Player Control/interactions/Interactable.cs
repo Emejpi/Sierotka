@@ -13,6 +13,9 @@ public class Interactable : MonoBehaviour {
     }
     public Interaction inter;
 
+    public Transform animStartPose;
+    public string anim;
+
     public int count;
 
     public Interaction GetInteraction()

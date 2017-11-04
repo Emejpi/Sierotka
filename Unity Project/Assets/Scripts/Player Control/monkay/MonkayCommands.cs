@@ -6,10 +6,10 @@ public class MonkayCommands : MonoBehaviour {
 
     PlayerControlSettings settings;
 
-    public CameraReferencesHolder orphan;
-    public CameraReferencesHolder monkay;
+    public CharacterMenager orphan;
+    public CharacterMenager monkay;
 
-    public CameraReferencesHolder currentChar;
+    public CharacterMenager currentChar;
 
     public TextMesh text;
 
@@ -66,7 +66,7 @@ public class MonkayCommands : MonoBehaviour {
 
     public bool IsOrphanActive()
     {
-        return orphan == currentChar;
+        return orphan == currentChar && orphan.IsControledByPLayer();
     }
 
     public void SwitchCharacters()
@@ -80,48 +80,39 @@ public class MonkayCommands : MonoBehaviour {
         if (currentChar == orphan)
         {
             GetComponent<PlayerSkills>().circleSelect.UnclockAllOptions(false);
-            ChangeToChar(monkay.gameObject);
-            ChangeState(monkay.gameObject, MonkayState.controled);
+            ChangeToChar(monkay);
+            ChangeState(monkay, MonkayState.controled);
         }
         else
         {
             GetComponent<PlayerSkills>().circleSelect.UnclockAllOptions(true);
-            ChangeToChar(orphan.gameObject);
-            ChangeState(monkay.gameObject, MonkayState.waiting);
+            ChangeToChar(orphan);
+            ChangeState(monkay, MonkayState.waiting);
         }
     }
 
-    void ChangeToChar(GameObject character)
+    void ChangeToChar(CharacterMenager character)
     {
-        EnableCharacter(currentChar.gameObject, false);
+        character.Control(false, false);
         currentChar.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
 
         LookAt(character);
         Follow(character);
 
-        EnableCharacter(character, true);
-        currentChar = character.GetComponent<CameraReferencesHolder>();
+        character.Control(true, true);
+        currentChar = character;
     }
 
-    void EnableCharacter(GameObject character, bool enable)
-    {
-        character.GetComponent<CameraReferencesHolder>().character.enabled = enable;
-        //if (character == monkay.gameObject)
-        //    ChangeState(character, MonkayState.waiting);
-        //character.GetComponent<CameraReferencesHolder>().character.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().enabled = enabled;
-        character.GetComponent<CameraReferencesHolder>().cameraLookAt.SetActive(enable);
-    }
-
-    public void ChangeState(GameObject character, MonkayState state)
+    public void ChangeState(CharacterMenager character, MonkayState state)
     {
 
-        character.GetComponent<CameraReferencesHolder>()
+        character
             .character.EnableAI(state == MonkayState.waiting || state == MonkayState.controled? false : true);
 
         this.state = state;
 
         if (state != MonkayState.running)
-            character.GetComponent<CameraReferencesHolder>().character.Chase(false);
+            character.character.Chase(false);
 
         switch(state)
         {
@@ -135,14 +126,14 @@ public class MonkayCommands : MonoBehaviour {
         }
     }
 
-    void LookAt(GameObject character)
+    void LookAt(CharacterMenager character)
     {
-        GetComponent<LookAtMe>().LookAt(character.GetComponent<CameraReferencesHolder>().cameraLookAt);
+        GetComponent<LookAtMe>().LookAt(character.cameraLookAt);
     }
 
-    void Follow(GameObject character)
+    void Follow(CharacterMenager character)
     {
-        GetComponent<FollowMe>().Follow(character.GetComponent<CameraReferencesHolder>().cameraPose);
+        GetComponent<FollowMe>().Follow(character.cameraPose);
     }
 
     public void SlowDownCamera(float speed)
@@ -169,10 +160,10 @@ public class MonkayCommands : MonoBehaviour {
         SwitchCharacters();
         SwitchCharacters();
 
-        ChangeState(monkay.gameObject, MonkayState.following);
+        ChangeState(monkay, MonkayState.following);
     }
 
-    public void CharacterVisible(CameraReferencesHolder characterHold, bool visible, bool controlChange)
+    public void CharacterVisible(CharacterMenager characterHold, bool visible, bool controlChange)
     {
         for (int i = 0; i < characterHold.character.transform.childCount; i++)
         {
@@ -199,7 +190,7 @@ public class MonkayCommands : MonoBehaviour {
 
     public void Wait()
     {
-        ChangeState(monkay.gameObject, MonkayState.waiting);
+        ChangeState(monkay, MonkayState.waiting);
         text.text = "WAIT";
     }
 
@@ -209,14 +200,14 @@ public class MonkayCommands : MonoBehaviour {
         {
             monkay.character.transform.position = transform.position - transform.forward * 5;
         }
-        ChangeState(monkay.gameObject, MonkayState.following);
+        ChangeState(monkay, MonkayState.following);
         text.text = "COME HERE";
     }
 
     public void GO()
     {
         directionTarget.Go(transform);
-        ChangeState(monkay.gameObject, MonkayState.going);
+        ChangeState(monkay, MonkayState.going);
         text.text = "GO!";
     }
 
@@ -230,13 +221,13 @@ public class MonkayCommands : MonoBehaviour {
 
         if (state == MonkayState.onBack)
         {
-            monkay.character.GetComponent<Animator>().CrossFade("Grounded", offBackBlandTime);
+            monkay.PlayAnim(offBackBlandTime, false);
 
-            ChangeState(monkay.gameObject, MonkayState.following);
+            ChangeState(monkay, MonkayState.following);
             DisenableEverythingMonkay(true);
 
-            monkay.character.GetComponent<LookAtMe>().LookAt(orphan.character.gameObject);
-            monkay.character.GetComponent<FollowMe>().Follow(null);
+            monkay.LookAt(orphan.character.gameObject);
+            monkay.Follow(null, false);
 
             DetachFromBack();
 
@@ -246,13 +237,13 @@ public class MonkayCommands : MonoBehaviour {
         }
         else
         {
-            monkay.character.GetComponent<Animator>().CrossFade("onBack", onBackBlandTime);
+            monkay.PlayAnim("onBack", onBackBlandTime, false);
             //MonkayVisible(!monkay.character.GetComponent<CapsuleCollider>().enabled);
-            ChangeState(monkay.gameObject, MonkayState.onBack);
+            ChangeState(monkay, MonkayState.onBack);
             DisenableEverythingMonkay(false);
 
-            monkay.character.GetComponent<LookAtMe>().LookAt(orphan.monkayOnBackPoseRef);
-            monkay.character.GetComponent<FollowMe>().Follow(orphan.monkayOnBackPoseRef);
+            monkay.LookAt(orphan.monkayOnBackPoseRef);
+            monkay.Follow(orphan.monkayOnBackPoseRef, false);
 
             monkay.character.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             //monkay.character.m_Character.Move(new Vector3(0, 0, 0), false, false);
@@ -279,7 +270,7 @@ public class MonkayCommands : MonoBehaviour {
         monkay.attacher.Attache();
 
         //monkay.character.GetComponent<LookAtMe>().LookAt(null);
-        monkay.character.GetComponent<FollowMe>().Follow(null);
+        monkay.Follow(null, false);
     }
 
     void DetachFromBack()
@@ -352,7 +343,7 @@ public class MonkayCommands : MonoBehaviour {
                     if (monkayAttachedToBack && returnToNormalAfterBackTimer < Time.time) //RETURN TO NORMAL
                     {
                         monkay.character.EnableAI(true);
-                        monkay.character.GetComponent<LookAtMe>().LookAt(null);
+                        monkay.LookAt(null);
                         monkayAttachedToBack = false;
                     }
                 }

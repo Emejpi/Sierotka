@@ -38,8 +38,8 @@ public class PlayerSkills : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         patrolHolder = GetComponent<CameraPortal>().orange.GetComponent<PatrolHoler>();
-        settings = GetComponent<PlayerControlSettings>();
         commands = GetComponent<MonkayCommands>();
+        settings = GetComponent<PlayerControlSettings>();
         timer = 0;
     }
 	

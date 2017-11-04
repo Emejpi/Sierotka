@@ -52,7 +52,7 @@ public class MonkayGoCrazy : MonoBehaviour {
 
                 {
                     forceIn = true;
-                    commands.ChangeState(gameObject.transform.parent.gameObject, MonkayCommands.MonkayState.following);
+                    commands.ChangeState(gameObject.transform.parent.gameObject.GetComponent<CharacterMenager>(), MonkayCommands.MonkayState.following);
                 }
             }
 
@@ -63,7 +63,7 @@ public class MonkayGoCrazy : MonoBehaviour {
                 {
                     ChangeCurrentRandomPositioner(Instantiate(randomPositioner, transform.position, Quaternion.identity));
                     ai.target = currentRandomPositioner.transform.GetChild(0);
-                    commands.ChangeState(gameObject.transform.parent.gameObject, MonkayCommands.MonkayState.running);
+                    commands.ChangeState(gameObject.transform.parent.gameObject.GetComponent<CharacterMenager>(), MonkayCommands.MonkayState.running);
                     crazy = true;
                 }
                 else if (timer < Time.time && character.GetSoundStrenght() < 0.2f)

@@ -65,7 +65,7 @@ public class Throwing : MonoBehaviour {
             if (inHand)
             {
                 GetComponent<CharakterPortal>().settings.GetComponent<MonkayCommands>().SlowDownCamera(firstPersonSwitchSpeed);
-                GetComponent<CharakterPortal>().settings.GetComponent<FollowMe>().target = transform.parent.GetComponent<CameraReferencesHolder>().cameraPoseFirstPerson;
+                GetComponent<CharakterPortal>().settings.GetComponent<FollowMe>().target = transform.parent.GetComponent<CharacterMenager>().cameraPoseFirstPerson;
                 hadItInHandOnClicking = true;
                 throwingDestination.GetComponent<MeshRenderer>().enabled = true;
 
@@ -87,7 +87,7 @@ public class Throwing : MonoBehaviour {
 
                 throwingDestination.GetComponent<MeshRenderer>().enabled = false;
 
-                GetComponent<CharakterPortal>().settings.GetComponent<FollowMe>().target = transform.parent.GetComponent<CameraReferencesHolder>().cameraPose;
+                GetComponent<CharakterPortal>().settings.GetComponent<FollowMe>().target = transform.parent.GetComponent<CharacterMenager>().cameraPose;
 
                 GetComponent<CharakterPortal>().settings.GetComponent<MonkayCommands>().SlowDownCamera(firstPersonSwitchSpeed/10);
 

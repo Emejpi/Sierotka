@@ -8,9 +8,12 @@ public class FollowMe : MonoBehaviour {
     public GameObject target;
     public float speed;
     float startSpeed;
-	
+
+    bool selfEnable;
+
     void Start()
     {
+        selfEnable = false;
         startSpeed = speed;
     }
 
@@ -34,9 +37,25 @@ public class FollowMe : MonoBehaviour {
         this.target = target;
     }
 
+    public void GoTo(GameObject target)
+    {
+        selfEnable = true;
+        Follow(target);
+
+    }
+
 	// Update is called once per frame
 	void Update () {
-        if(target)
+        if (target)
+        {
             transform.position = GetComponent<Lerper>().LerpVector3(transform.position, target.transform.position, speed);
-	}
+
+            if (selfEnable && DistanceFormTarget() < 0.1f)
+            {
+                selfEnable = false;
+                Follow(null);
+                GetComponent<LookAtMe>().LookAt(null);
+            }
+        }
+    }
 }
